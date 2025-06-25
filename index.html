@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    :root {
+      --accent-color: #ff5722;
+      --bg-light: #ffffff;
+      --bg-dark: #121212;
+      --text-light: #000000;
+      --text-dark: #ffffff;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      transition: background 0.3s ease, color 0.3s ease;
+      scroll-behavior: smooth;
+    }
+
+    .modern-header {
+      background: white;
+      padding: 10px 30px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+      border-radius: 50px;
+      margin: 20px auto;
+      max-width: 1100px;
+      position: sticky;
+      top: 20px;
+      z-index: 1000;
+    }
+
+    .header-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo-text {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--accent-color);
+    }
+
+    .main-nav {
+      display: flex;
+      gap: 25px;
+      align-items: center;
+    }
+
+    .main-nav a {
+      text-decoration: none;
+      color: #222;
+      font-weight: 500;
+      padding: 5px;
+      transition: color 0.3s;
+    }
+
+    .main-nav a:hover,
+    .main-nav a.active {
+      color: var(--accent-color);
+    }
+
+    .cta-button {
+      background: var(--accent-color);
+      color: white;
+      padding: 10px 18px;
+      border-radius: 25px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    .cta-button:hover {
+      background: #e64a19;
+    }
+
+    section {
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .profile-img {
+      border-radius: 50%;
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      margin-bottom: 20px;
+    }
+
+    .education-skills {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 30px;
+      margin-top: 40px;
+      text-align: left;
+    }
+
+    .edu-box, .skill-box {
+      flex: 1 1 45%;
+      background: rgba(0, 0, 0, 0.05);
+      padding: 20px;
+      border-radius: 10px;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s ease;
+    }
+
+    .edu-box.show, .skill-box.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #about p {
+      max-width: 800px;
+      margin: 0 auto 30px;
+      line-height: 1.7;
+      text-align: justify;
+    }
+
+    .contact-info, .social-icons {
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    .social-icons a {
+      color: var(--accent-color);
+      margin: 0 10px;
+      font-size: 22px;
+      transition: color 0.3s;
+    }
+
+    .social-icons a:hover {
+      color: #e64a19;
+    }
+
+    .contact-box {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s ease;
+    }
+
+    .contact-box.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .footer {
+      background: #f1f1f1;
+      color: #333;
+      text-align: center;
+      padding: 20px;
+      font-weight: 500;
+    }
+
+    @media screen and (max-width: 768px) {
+      .education-skills {
+        flex-direction: column;
+      }
+
+      .edu-box, .skill-box {
+        width: 100%;
+      }
+    }
+
+    body.dark {
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
+    body.dark .modern-header {
+      background-color: #1e1e1e;
+      color: var(--text-dark);
+    }
+
+    body.dark .main-nav a {
+      color: #ccc;
+    }
+
+    body.dark .main-nav a.active,
+    body.dark .main-nav a:hover {
+      color: var(--accent-color);
+    }
+
+    body.dark .footer {
+      background-color: #333;
+      color: #ccc;
+    }
+
+    body.dark .edu-box, 
+    body.dark .skill-box, 
+    body.dark .contact-box {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .theme-switch-wrapper {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1001;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 18px;
+    }
+
+    .theme-switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 30px;
+    }
+
+    .theme-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0;
+      right: 0; bottom: 0;
+      background-color: #ccc;
+      transition: 0.4s;
+      border-radius: 30px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 24px;
+      width: 24px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: var(--accent-color);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(30px);
+    }
+
+    .mode-label {
+      color: var(--accent-color);
+      font-weight: bold;
+    }
+
+    hr {
+      width: 60%;
+      margin: 40px auto;
+      border: 1px solid #ddd;
+    }
+  </style>
+</head>
+
+<body class="light">
+  <!-- Header -->
+  <header class="modern-header">
+    <div class="header-container">
+      <div class="logo">
+        <span class="logo-text">Portfolio</span>
+      </div>
+      <nav class="main-nav">
+        <a href="#home">Home</a>
+        <a href="#resume">Resume</a>
+        <a href="#services">Services</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Home Section -->
+  <section id="home">
+    <img src="profile.png" alt="Profile Picture" class="profile-img" />
+    <h1>Hi, I'm <strong>Guruprasath</strong></h1>
+    <p>Welcome to my portfolio!</p>
+  </section>
+
+  <!-- About Section -->
+  <section id="about">
+    <h2>About Me</h2>
+    <p>Creative and detail-oriented Graphic Designer with hands-on experience in Canva and freelancing for college events. Passionate about blending design aesthetics with technology, and currently expanding skills in Python programming. Eager to contribute to dynamic projects that require both visual creativity and logical thinking in a growth-oriented organization.</p>
+    <div class="education-skills">
+      <div class="edu-box">
+        <h3>Education</h3>
+        <ul>
+          <li>B.E.Computer Science and Engineering - Krishnasamy College of Engineering and Technology,Cudallore</li>
+          <li>Higher Secondary Education - Balaji Hr Sec School,Puducherry </li>
+          <li>secondary Education  - Balaji Hr Sec School,Puducherry </li>
+        </ul>
+      </div>
+      <div class="skill-box">
+        <h3>Skills</h3>
+        <ul>
+         
+          <li>Adobe Illustrator, Photoshop, canva, Figma </li>
+          <li>UI/UX Design</li>
+          <li>GitHub ,Version Control</li>
+          <li>Python</li>
+          
+          
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Resume Section -->
+  <section id="resume">
+    <h2>Resume</h2>
+    <p>Click below to download my resume.</p>
+    <a src="Guruprasath_Resume.pdf
+    " download class="cta-button">📄 Download Resume</a>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services">
+    <h2>Services</h2>
+    <div class="education-skills">
+      <div class="service edu-box">
+        <h3>Grapic Design</h3>
+        <p>Designs that speak louder than words. Freelance creativity at your service.</p>
+      </div>
+      <div class="service skill-box">
+        <h3>UI/UX Design</h3>
+        <p>Creating intuitive and beautiful designs.</p>
+      </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="education-skills">
+      <div class="project skill-box">
+        <h3>Kcet cultural Fest- 2025</h3>
+        <p>Presenting the poster design for college events.</p>
+      </div>
+      <div class="project skill-box">
+        <h3>Inter in Rhino Creative Agencey - Graphic Designer</h3>
+        <p>Internship for 3 months in Rhino Creative Agencey</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <h2>Contact</h2>
+    <div class="contact-info contact-box">
+      <p>Email: guruprasathkkm@gmail.com</p>
+      <p>Phone: 9361583680</p>
+      <p>LinkedIn: https://www.linkedin.com/in/guruprasath7
+</p>
+    </div>
+    <div class="social-icons contact-box">
+      <a href="https://www.linkedin.com/in/guruprasath7
+" target="_blank"><i class="fab fa-linkedin"></i></a>
+      <a href="https://github.com/Guruprasath318" target="_blank"><i class="fab fa-github"></i></a>
+      <a href="https://instagram.com/gp.9472" target="_blank"><i class="fab fa-instagram"></i></a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 Guruprasath | GP Studio's | All Rights Reserved</p>
+  </footer>
+
+  <!-- Theme Toggle -->
+  <div class="theme-switch-wrapper">
+    <label class="theme-switch" for="theme-toggle">
+      <input type="checkbox" id="theme-toggle" />
+      <span class="slider"></span>
+    </label>
+    <span class="mode-label">🌞</span>
+  </div>
+
+  <script>
+    // Dark mode
+    const toggleSwitch = document.getElementById('theme-toggle');
+    const modeLabel = document.querySelector('.mode-label');
+
+    function applyTheme(theme) {
+      document.body.classList.remove('light', 'dark');
+      document.body.classList.add(theme);
+      localStorage.setItem('theme', theme);
+      toggleSwitch.checked = theme === 'dark';
+      modeLabel.textContent = theme === 'dark' ? '🌙' : '🌞';
+    }
+
+    toggleSwitch.addEventListener('change', () => {
+      applyTheme(toggleSwitch.checked ? 'dark' : 'light');
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const saved = localStorage.getItem('theme') || 'light';
+      applyTheme(saved);
+    });
+
+    // Scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+        }
+      });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll(".edu-box, .skill-box, .contact-box").forEach(el => {
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
