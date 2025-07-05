@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
     :root {
-      --accent-color: #ff5722;
+      --accent-color: #1976d2; /* Changed from #ff5722 (orange) to #1976d2 (blue) */
       --bg-light: #ffffff;
       --bg-dark: #121212;
       --text-light: #000000;
@@ -43,7 +43,7 @@
     .logo-text {
       font-size: 22px;
       font-weight: 600;
-      color: var(--accent-color);
+      color: var(--accent-color); /* uses blue now */
     }
 
     .main-nav {
@@ -62,11 +62,11 @@
 
     .main-nav a:hover,
     .main-nav a.active {
-      color: var(--accent-color);
+      color: var(--accent-color); /* uses blue now */
     }
 
     .cta-button {
-      background: var(--accent-color);
+      background: var(--accent-color); /* uses blue now */
       color: white;
       padding: 10px 18px;
       border-radius: 25px;
@@ -76,20 +76,53 @@
     }
 
     .cta-button:hover {
-      background: #e64a19;
+      background: #1565c0; /* blue shade for hover, was #e64a19 */
     }
 
     section {
-      padding: 60px 20px;
+      padding: 90px 8vw; /* Increased vertical and horizontal padding */
       text-align: center;
+      max-width: 1200px;  /* Optional: wider section */
+      margin: 0 auto;
+    }
+
+    @media screen and (max-width: 768px) {
+      section {
+        padding: 50px 4vw; /* Responsive for mobile */
+      }
     }
 
     .profile-img {
       border-radius: 50%;
-      width: 150px;
-      height: 150px;
+      width: 220px;
+      height: 220px;
       object-fit: cover;
       margin-bottom: 20px;
+      box-shadow: 0 8px 32px rgba(25,118,210,0.18), 0 2px 8px rgba(0,0,0,0.10); /* blue shadow */
+      border: 5px solid var(--accent-color); /* uses blue now */
+      transition: transform 0.4s cubic-bezier(.68,-0.55,.27,1.55), box-shadow 0.4s;
+      animation: profile-pop 1.2s cubic-bezier(.68,-0.55,.27,1.55);
+    }
+
+    .profile-img:hover {
+      transform: scale(1.08) rotate(-3deg);
+      box-shadow: 0 16px 48px rgba(25,118,210,0.22), 0 4px 16px rgba(0,0,0,0.13); /* blue shadow */
+      border-color: #1565c0; /* blue shade for hover, was #e64a19 */
+    }
+
+    @keyframes profile-pop {
+      0% {
+        transform: scale(0.7) rotate(10deg);
+        opacity: 0;
+      }
+      60% {
+        transform: scale(1.15) rotate(-5deg);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+      }
     }
 
     .education-skills {
@@ -129,14 +162,14 @@
     }
 
     .social-icons a {
-      color: var(--accent-color);
+      color: var(--accent-color); /* uses blue now */
       margin: 0 10px;
       font-size: 22px;
       transition: color 0.3s;
     }
 
     .social-icons a:hover {
-      color: #e64a19;
+      color: #1565c0; /* blue shade for hover, was #e64a19 */
     }
 
     .contact-box {
@@ -245,7 +278,7 @@
     }
 
     input:checked + .slider {
-      background-color: var(--accent-color);
+      background-color: var(--accent-color); /* uses blue now */
     }
 
     input:checked + .slider:before {
@@ -253,7 +286,7 @@
     }
 
     .mode-label {
-      color: var(--accent-color);
+      color: var(--accent-color); /* uses blue now */
       font-weight: bold;
     }
 
@@ -261,6 +294,72 @@
       width: 60%;
       margin: 40px auto;
       border: 1px solid #ddd;
+    }
+
+    /* About section animation styles */
+    .about-title {
+      font-size: 2.2rem;
+      letter-spacing: 2px;
+      background: linear-gradient(90deg, #1976d2 40%, #42a5f5 100%);
+      color: transparent;
+      background-clip: text;
+      -webkit-background-clip: text;
+      animation: about-title-fade 1.2s 0.2s both;
+    }
+
+    @keyframes about-title-fade {
+      0% { opacity: 0; transform: translateY(-30px) scale(0.95); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .about-desc {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: about-desc-fade 1.2s 0.6s forwards cubic-bezier(.68,-0.55,.27,1.55);
+      background: rgba(25, 118, 210, 0.07);
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin-bottom: 30px;
+      font-size: 1.13rem;
+      box-shadow: 0 2px 12px rgba(25,118,210,0.07);
+    }
+
+    @keyframes about-desc-fade {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .edu-box, .skill-box {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s cubic-bezier(.68,-0.55,.27,1.55);
+    }
+    .edu-box.show, .skill-box.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #home h1 {
+      font-size: 2.8rem;
+      margin-bottom: 18px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+    }
+
+    #welcome-text {
+      font-size: 1.5rem;
+      font-weight: 500;
+      margin-top: 10px;
+      color: var(--accent-color);
+      letter-spacing: 1px;
+    }
+
+    @media screen and (max-width: 768px) {
+      #home h1 {
+        font-size: 2rem;
+      }
+      #welcome-text {
+        font-size: 1.1rem;
+      }
     }
   </style>
 </head>
@@ -278,6 +377,14 @@
         <a href="#services">Services</a>
         <a href="#projects">Projects</a>
         <a href="#contact">Contact</a>
+        <!-- Theme Toggle moved here -->
+        <div class="theme-switch-wrapper" style="position: static; bottom: auto; right: auto; gap: 5px; margin-left: 20px;">
+          <label class="theme-switch" for="theme-toggle">
+            <input type="checkbox" id="theme-toggle" />
+            <span class="slider"></span>
+          </label>
+          <span class="mode-label">Theme</span>
+        </div>
       </nav>
     </div>
   </header>
@@ -285,14 +392,16 @@
   <!-- Home Section -->
   <section id="home">
     <img src="profile.png" alt="Profile Picture" class="profile-img" />
-    <h1>Hi, I'm <strong>Guruprasath</strong></h1>
-    <p>Welcome to my portfolio!</p>
+    <h1>Hi, I'm <strong id="typing-name"></strong></h1>
+    <p id="welcome-text" style="opacity:0; transition: opacity 0.6s;">Welcome to my portfolio!</p>
   </section>
 
   <!-- About Section -->
   <section id="about">
-    <h2>About Me</h2>
-    <p>Creative and detail-oriented Graphic Designer with hands-on experience in Canva and freelancing for college events. Passionate about blending design aesthetics with technology, and currently expanding skills in Python programming. Eager to contribute to dynamic projects that require both visual creativity and logical thinking in a growth-oriented organization.</p>
+    <h2 class="about-title">About Me</h2>
+    <p class="about-desc">
+      Creative and detail-oriented Graphic Designer with hands-on experience in Canva and freelancing for college events. Passionate about blending design aesthetics with technology, and currently expanding skills in Python programming. Eager to contribute to dynamic projects that require both visual creativity and logical thinking in a growth-oriented organization.
+    </p>
     <div class="education-skills">
       <div class="edu-box">
         <h3>Education</h3>
@@ -305,13 +414,10 @@
       <div class="skill-box">
         <h3>Skills</h3>
         <ul>
-         
           <li>Adobe Illustrator, Photoshop, canva, Figma </li>
           <li>UI/UX Design</li>
           <li>GitHub ,Version Control</li>
           <li>Python</li>
-          
-          
         </ul>
       </div>
     </div>
@@ -321,8 +427,7 @@
   <section id="resume">
     <h2>Resume</h2>
     <p>Click below to download my resume.</p>
-    <a src="Guruprasath_Resume.pdf
-    " download class="cta-button">📄 Download Resume</a>
+    <a href="Guruprasath_Resume.pdf" download class="cta-button">📄 Download Resume</a>
   </section>
 
   <!-- Services Section -->
@@ -352,7 +457,7 @@
       </div>
       <div class="project skill-box">
         <h3>Inter in Rhino Creative Agencey - Graphic Designer</h3>
-        <p>Internship for 3 months in Rhino Creative Agencey</p>
+        <p>Internship for 1 month in Rhino Creative Agencey</p>
       </div>
     </div>
   </section>
@@ -367,26 +472,17 @@
 </p>
     </div>
     <div class="social-icons contact-box">
-      <a href="https://www.linkedin.com/in/guruprasath7
-" target="_blank"><i class="fab fa-linkedin"></i></a>
+      <a href="https://www.linkedin.com/in/guruprasath7" target="_blank"><i class="fab fa-linkedin"></i></a>
       <a href="https://github.com/Guruprasath318" target="_blank"><i class="fab fa-github"></i></a>
       <a href="https://instagram.com/gp.9472" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.behance.net/guruprasaths2" target="_blank"><i class="fab fa-behance"></i></a>
     </div>
   </section>
 
   <!-- Footer -->
   <footer class="footer">
-    <p>&copy; 2025 Guruprasath | GP Studio's | All Rights Reserved</p>
+    <p>&copy; 2025 Guruprasath | viszen | All Rights Reserved</p>
   </footer>
-
-  <!-- Theme Toggle -->
-  <div class="theme-switch-wrapper">
-    <label class="theme-switch" for="theme-toggle">
-      <input type="checkbox" id="theme-toggle" />
-      <span class="slider"></span>
-    </label>
-    <span class="mode-label">🌞</span>
-  </div>
 
   <script>
     // Dark mode
@@ -398,7 +494,7 @@
       document.body.classList.add(theme);
       localStorage.setItem('theme', theme);
       toggleSwitch.checked = theme === 'dark';
-      modeLabel.textContent = theme === 'dark' ? '🌙' : '🌞';
+      modeLabel.textContent = "Theme"; // Always show "Theme"
     }
 
     toggleSwitch.addEventListener('change', () => {
@@ -408,6 +504,24 @@
     window.addEventListener('DOMContentLoaded', () => {
       const saved = localStorage.getItem('theme') || 'light';
       applyTheme(saved);
+
+      // Typing effect for name, then show welcome
+      const name = "Guruprasath";
+      const typingElement = document.getElementById("typing-name");
+      const welcomeText = document.getElementById("welcome-text");
+      let i = 0;
+      function type() {
+        if (i <= name.length) {
+          typingElement.textContent = name.slice(0, i);
+          i++;
+          setTimeout(type, 120);
+        } else {
+          setTimeout(() => {
+            welcomeText.style.opacity = 1;
+          }, 300);
+        }
+      }
+      type();
     });
 
     // Scroll animations
@@ -421,6 +535,19 @@
 
     document.querySelectorAll(".edu-box, .skill-box, .contact-box").forEach(el => {
       observer.observe(el);
+    });
+
+    // Show About section boxes with animation on scroll
+    const observerAbout = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+        }
+      });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll(".edu-box, .skill-box").forEach(el => {
+      observerAbout.observe(el);
     });
   </script>
 </body>
