@@ -22,6 +22,56 @@
       scroll-behavior: smooth;
     }
 
+    body.light {
+      background: var(--bg-light);
+      color: var(--text-light);
+    }
+
+    body.dark {
+      background: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
+    body.dark .modern-header {
+      background: linear-gradient(90deg, #222 80%, #1976d2 100%);
+      color: var(--text-dark);
+    }
+
+    body.dark .logo-text,
+    body.dark .main-nav a,
+    body.dark .main-nav a.active {
+      color: var(--text-dark);
+    }
+
+    body.dark .cta-button {
+      background: #42a5f5;
+      color: #fff;
+    }
+
+    body.dark .edu-box,
+    body.dark .skill-box,
+    body.dark .project-animate {
+      background: rgba(255,255,255,0.04);
+      color: var(--text-dark);
+    }
+
+    body.dark .about-title,
+    body.dark .contact-title {
+      background: linear-gradient(90deg, #42a5f5 40%, #1976d2 100%);
+      color: transparent;
+      background-clip: text;
+      -webkit-background-clip: text;
+    }
+
+    body.dark .footer {
+      background: #222;
+      color: #fff;
+    }
+
+    body.dark .social-icons a {
+      color: #90caf9;
+    }
+
     .modern-header {
       background: white;
       padding: 10px 30px;
@@ -487,14 +537,8 @@
         <a href="#services">Services</a>
         <a href="#projects">Projects</a>
         <a href="#contact">Contact</a>
-        <!-- Theme Toggle moved here -->
-        <div class="theme-switch-wrapper" style="position: static; bottom: auto; right: auto; gap: 5px; margin-left: 20px;">
-          <label class="theme-switch" for="theme-toggle">
-            <input type="checkbox" id="theme-toggle" />
-            <span class="slider"></span>
-          </label>
-          <span class="mode-label">Theme</span>
-        </div>
+        <!-- Theme Toggle Button -->
+        <button id="theme-toggle-btn" class="cta-button" style="margin-left:20px;">🌙 Dark Mode</button>
       </nav>
     </div>
   </header>
@@ -599,17 +643,25 @@
   <!-- Contact Section -->
   <section id="contact">
     <h2 class="contact-title">Contact</h2>
-    <div class="contact-info contact-box">
-      <p>Email: guruprasathkkm@gmail.com</p>
-      <p>Phone: 9361583680</p>
-      <p>LinkedIn: https://www.linkedin.com/in/guruprasath7
-</p>
-    </div>
-    <div class="social-icons contact-box">
-      <a href="https://www.linkedin.com/in/guruprasath7" target="_blank"><i class="fab fa-linkedin"></i></a>
-      <a href="https://github.com/Guruprasath318" target="_blank"><i class="fab fa-github"></i></a>
-      <a href="https://instagram.com/gp.9472" target="_blank"><i class="fab fa-instagram"></i></a>
-      <a href="https://www.behance.net/guruprasaths2" target="_blank"><i class="fab fa-behance"></i></a>
+    <div class="contact-info contact-box" style="display:flex;flex-direction:row;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px;">
+      <button class="cta-button" onclick="window.location.href='mailto:guruprasathkkm@gmail.com'">
+        <i class="fas fa-envelope"></i> Email
+      </button>
+      <button class="cta-button" onclick="window.location.href='tel:9361583680'">
+        <i class="fas fa-phone"></i> Call
+      </button>
+      <button class="cta-button" onclick="window.open('https://www.linkedin.com/in/guruprasath7','_blank')">
+        <i class="fab fa-linkedin"></i> LinkedIn
+      </button>
+      <button class="cta-button" onclick="window.open('https://github.com/Guruprasath318','_blank')">
+        <i class="fab fa-github"></i> GitHub
+      </button>
+      <button class="cta-button" onclick="window.open('https://instagram.com/gp.9472','_blank')">
+        <i class="fab fa-instagram"></i> Instagram
+      </button>
+      <button class="cta-button" onclick="window.open('https://www.behance.net/guruprasaths2','_blank')">
+        <i class="fab fa-behance"></i> Behance
+      </button>
     </div>
   </section>
 
@@ -620,19 +672,18 @@
 
   <script>
     // Dark mode
-    const toggleSwitch = document.getElementById('theme-toggle');
-    const modeLabel = document.querySelector('.mode-label');
+    const themeBtn = document.getElementById('theme-toggle-btn');
 
     function applyTheme(theme) {
       document.body.classList.remove('light', 'dark');
       document.body.classList.add(theme);
       localStorage.setItem('theme', theme);
-      toggleSwitch.checked = theme === 'dark';
-      modeLabel.textContent = "Theme"; // Always show "Theme"
+      themeBtn.textContent = theme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
     }
 
-    toggleSwitch.addEventListener('change', () => {
-      applyTheme(toggleSwitch.checked ? 'dark' : 'light');
+    themeBtn.addEventListener('click', () => {
+      const newTheme = document.body.classList.contains('dark') ? 'light' : 'dark';
+      applyTheme(newTheme);
     });
 
     window.addEventListener('DOMContentLoaded', () => {
